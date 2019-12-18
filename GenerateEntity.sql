@@ -8,11 +8,10 @@
 		@ExcludeID - if 1, than ID excludes from entioy code
 */
 
-DECLARE @TableName NVARCHAR(100) = 'PersonDocuments'
+DECLARE @TableName NVARCHAR(100) = 'MedicationsChainStage'
 		, @ExcludeID BIT = 1
 
-SELECT
-       N'/// <summary>' + N'
+SELECT N'/// <summary>' + N'
 /// ' + CAST(sep.value AS NVARCHAR(250))
        + N'
 /// </summary>
@@ -31,13 +30,14 @@ SELECT
   WHEN 175 THEN 'string'
   WHEN 231 THEN 'string'
   WHEN 239 THEN 'string'
+  WHEN 106 THEN 'decimal'
   ELSE 'TYPE NOT IDENTIFIED'
   END
 + ' ' + sc.name + ' { get; set; } ' + CHAR(13) [Description]
-    FROM sys.tables st
-    INNER JOIN sys.columns sc ON st.object_id = sc.object_id
-    LEFT JOIN sys.extended_properties sep ON st.object_id = sep.major_id
-                                         AND sc.column_id = sep.minor_id
-                                         AND sep.name = 'MS_Description'
-    WHERE st.name = @TableName
-		  AND (sc.name != 'id' OR @ExcludeID = 0)
+FROM sys.tables st
+       INNER JOIN sys.columns sc ON st.object_id = sc.object_id
+       LEFT JOIN sys.extended_properties sep ON st.object_id = sep.major_id
+              AND sc.column_id = sep.minor_id
+              AND sep.name = 'MS_Description'
+WHERE st.name = @TableName
+       AND (sc.name != 'id' OR @ExcludeID = 0)

@@ -1,8 +1,8 @@
 SET NOCOUNT ON;
 DECLARE @Cnt INT = 0 -- count all records
-              , @I INT = 0 -- current iterration
-              , @AvgTime INT = 0 -- average time of executions of one batch
-              , @BatchSize INT = 1000 --one batch size;
+       , @I INT = 0 -- current iterration
+       , @AvgTime INT = 0 -- average time of executions of one batch
+       , @BatchSize INT = 1000 --one batch size;
 DECLARE @Iterrations TABLE
 (
        ExecutionTime INT
